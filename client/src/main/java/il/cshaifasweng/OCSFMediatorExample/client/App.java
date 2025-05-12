@@ -65,6 +65,32 @@ public class App extends Application {
     	
     }
 
+
+
+    @Subscribe
+    public void onStartGameEvent(GameEvent event) {
+        System.out.println("GameEvent");
+        Platform.runLater(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SecondaryController.fxml"));
+                Parent root = loader.load();
+
+                // Pass data to secondary controller if needed
+                SecondaryController controller = loader.getController();
+
+                // Switch scene
+                Stage stage = (Stage) scene.getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+
+
 	public static void main(String[] args) {
         launch();
     }

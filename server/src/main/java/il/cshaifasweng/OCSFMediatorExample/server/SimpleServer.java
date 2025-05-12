@@ -29,14 +29,33 @@ public class SimpleServer extends AbstractServer {
 				e.printStackTrace();
 			}
 		}
-		else if(msgString.startsWith("add client")){
+
+		else if(msgString.startsWith("add client")) {
 			SubscribedClient connection = new SubscribedClient(client);
 			SubscribersList.add(connection);
+			int numberOfSubscribers = SubscribersList.size();
 			try {
-				client.sendToClient("client added successfully");
+				System.out.println(numberOfSubscribers);
+				if (numberOfSubscribers == 1) {
+					client.sendToClient("client added successfully - O");
+					numberOfSubscribers++;
+				} else if (numberOfSubscribers == 2) {
+					client.sendToClient("client added successfully - X");
+					numberOfSubscribers++;
+				}
+				if (numberOfSubscribers == 2) {
+					System.out.println(numberOfSubscribers);
+					System.out.println("sent all client are connected");
+					sendToAllClients("all clients are connected");
+				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
+		}
+		else if(msgString.startsWith("Client move")) {
+			System.out.println(msgString);
+
+
 		}
 		else if(msgString.startsWith("remove client")){
 			if(!SubscribersList.isEmpty()){
